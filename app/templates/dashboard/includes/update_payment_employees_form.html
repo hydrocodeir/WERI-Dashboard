@@ -1,0 +1,82 @@
+<!-- Form Add New Record -->
+<div class="col-12 mb-4">
+    <div class="bs-stepper wizard-numbered mt-2">
+
+        <!-- Error Form -->
+        {% if form.is_submitted() and form.errors|count > 0 %}
+        <div class="alert-danger p-3" role="alert">
+            {{ form.errors|count }} خطا رخ داده است:
+            <ul>
+                {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <li>{{ form[field_name].label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}    
+        <!-- / Error Form -->
+
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#employee_payment-1">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">مشخصات پرداختی به پژوهشگر</span>
+                        <span class="bs-stepper-subtitle">وارد کردن مشخصات پرداختی به پژوهشگر</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+        </div>
+
+        <div class="bs-stepper-content">
+            <form action="" method="POST" novalidate>
+                {{ form.csrf_token }}
+                <div id="employee_payment-1" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را ویرایش کرده و بر روی دکمه «بروزرسانی کردن» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-8">
+                            {{ form.pe_project_id.label(class="form-label") }}
+                            {{ form.pe_project_id(class="select2") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.pe_employee_id.label(class="form-label") }}
+                            {{ form.pe_employee_id(class="select2") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.pe_received_employer_id.label(class="form-label") }}
+                            {{ form.pe_received_employer_id(class="select2") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.payment_date.label(class="form-label") }}
+                            {{ form.payment_date(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.payment_amount.label(class="form-label") }}
+                            {{ form.payment_amount(class="form-control numeral-mask") }}
+                        </div>
+                        <div class="col-12">
+                            {{ form.payment_description.label(class="form-label") }}
+                            {{ form.payment_description(class="form-control") }}
+                        </div>
+                        <input type="hidden" name="form_id" value="update_payment_employees">
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev disabled" style="color: white;">
+                                <i class="bx bx-chevron-right bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <button type="submit" class="btn btn-success btn-submit">
+                                بروزرسانی کردن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- / Form Add New Record -->

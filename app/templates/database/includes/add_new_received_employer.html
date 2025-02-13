@@ -1,0 +1,171 @@
+<!-- Form Add New Record -->
+<div class="col-12 mb-4">
+    <div class="bs-stepper wizard-numbered-ear mt-2">
+
+        <!-- Error Form -->
+        {% if new_received_employer_form.is_submitted() and new_received_employer_form.errors|count > 0 %}
+        <div class="alert-danger p-3" role="alert">
+            {{ new_received_employer_form.errors|count }} خطا رخ داده است:
+            <ul>
+                {% for field_name, field_errors in new_received_employer_form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <li>{{ new_received_employer_form[field_name].label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}    
+        <!-- / Error Form -->
+
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#ear-1">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">اطلاعات درخواست از کارفرما</span>
+                        <span class="bs-stepper-subtitle">وارد اطلاعات درخواست از کارفرما</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#ear-2">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">اطلاعات واریزی به دانشگاه</span>
+                        <span class="bs-stepper-subtitle">وارد کردن اطلاعات واریزی به دانشگاه</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#ear-3">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">3</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">کسورات و بالاسری‌ها</span>
+                        <span class="bs-stepper-subtitle">وارد کردن کسورات و بالاسری‌ها</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="bs-stepper-content">
+            <form action="{{ url_for('database.home') }}" method="POST" novalidate>
+                {{ new_received_employer_form.csrf_token }}
+                <div id="ear-1" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را وارد کرده و بر روی دکمه «بعدی» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-9">
+                            {{ new_received_employer_form.re_project_id.label(class="form-label") }}
+                            {{ new_received_employer_form.re_project_id(class="select2") }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ new_received_employer_form.name.label(class="form-label") }}
+                            {{ new_received_employer_form.name(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.requested_date.label(class="form-label") }}
+                            {{ new_received_employer_form.requested_date(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.requested_amount.label(class="form-label") }}
+                            {{ new_received_employer_form.requested_amount(class="form-control numeral-mask") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.requested_letter_number.label(class="form-label") }}
+                            {{ new_received_employer_form.requested_letter_number(class="form-control") }}
+                        </div>
+                        <div class="col-sm-12">
+                            {{ new_received_employer_form.requested_description.label(class="form-label") }}
+                            {{ new_received_employer_form.requested_description(class="form-control") }}
+                        </div>
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-label-secondary btn-prev-ear disabled" style="color: white;">
+                                <i class="bx bx-chevron-right bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <a class="btn btn-primary btn-next-ear" style="color: white;">
+                                <span class="d-sm-inline-block d-none" >بعدی</span>
+                                <i class="bx bx-chevron-left bx-sm me-sm-n2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="ear-2" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را وارد کرده و بر روی دکمه «بعدی» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.received_date.label(class="form-label") }}
+                            {{ new_received_employer_form.received_date(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.received_amount.label(class="form-label") }}
+                            {{ new_received_employer_form.received_amount(class="form-control numeral-mask") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.received_letter_number.label(class="form-label") }}
+                            {{ new_received_employer_form.received_letter_number(class="form-control") }}
+                        </div>
+                        <div class="col-12">
+                            {{ new_received_employer_form.received_description.label(class="form-label") }}
+                            {{ new_received_employer_form.received_description(class="form-control") }}
+                        </div>
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev-ear" style="color: white;">
+                                <i class="bx bx-chevron-right bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <a class="btn btn-primary btn-next-ear" style="color: white;">
+                                <span class="d-sm-inline-block d-none" >بعدی</span>
+                                <i class="bx bx-chevron-left bx-sm me-sm-n2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="ear-3" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را وارد کرده و بر روی دکمه «اضافه کردن» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.insurance_percentage.label(class="form-label") }}
+                            {{ new_received_employer_form.insurance_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.guarantee_performance_percentage.label(class="form-label") }}
+                            {{ new_received_employer_form.guarantee_performance_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.tax_percentage.label(class="form-label") }}
+                            {{ new_received_employer_form.tax_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.university_overhead_percentage.label(class="form-label") }}
+                            {{ new_received_employer_form.university_overhead_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_received_employer_form.weri_overhead_percentage.label(class="form-label") }}
+                            {{ new_received_employer_form.weri_overhead_percentage(class="form-control") }}
+                        </div>
+                        <input type="hidden" name="form_id" value="received_employer">
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev-ear" style="color: white;">
+                                <i class="bx bx-chevron-right bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <button type="submit" class="btn btn-success btn-submit-ear">
+                                اضافه کردن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- / Form Add New Record -->

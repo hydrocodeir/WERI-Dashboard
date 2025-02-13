@@ -1,0 +1,74 @@
+<!-- Form Add New Record -->
+<div class="col-md-6 mb-4" id="target-add-timeline">
+    <div class="bs-stepper wizard-numbered-timeline mt-2">
+
+        <!-- Error Form -->
+        {% if new_timeline_form.is_submitted() and new_timeline_form.errors|count > 0 %}
+        <div class="alert-danger p-3" role="alert">
+            {{ new_timeline_form.errors|count }} خطا رخ داده است:
+            <ul>
+                {% for field_name, field_errors in new_timeline_form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                <li>{{ new_timeline_form[field_name].label }}: {{ error }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <!-- / Error Form -->
+
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#pro-1">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">اضافه کردن تایم‌لاین به پروژه</span>
+                        <span class="bs-stepper-subtitle">اضافه کردن تاریخ‌های مهم پروژه</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+        </div>
+
+        <div class="bs-stepper-content">
+            <form action="" method="POST" novalidate>
+                {{ new_timeline_form.csrf_token }}
+                <div id="pro-1" class="content active">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را وارد کرده و بر روی دکمه «اضافه کردن» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            {{ new_timeline_form.t_project_id.label(class="form-label") }}
+                            {{ new_timeline_form.t_project_id(class="select2") }}
+                        </div>
+                        <div class="col-6">
+                            {{ new_timeline_form.name.label(class="form-label") }}
+                            {{ new_timeline_form.name(class="form-control") }}
+                        </div>
+                        <div class="col-6">
+                            {{ new_timeline_form.date.label(class="form-label") }}
+                            {{ new_timeline_form.date(class="form-control") }}
+                        </div>
+                        <div class="col-12">
+                            {{ new_timeline_form.description.label(class="form-label") }}
+                            {{ new_timeline_form.description(class="form-control") }}
+                        </div>
+                        <input type="hidden" name="form_id" value="timeline">
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev-timeline disabled" style="color: white;">
+                                <i class="bx bx-chevron-right bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <button type="submit" class="btn btn-success btn-submit-timeline">
+                                اضافه کردن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- / Form Add New Record -->

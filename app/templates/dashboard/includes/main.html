@@ -1,0 +1,446 @@
+<div class="col-xl-8 col-lg-7 col-md-7">
+    <!-- Activity Timeline -->
+    <div class="row">
+
+        {% set contract_insurance = project.contract_price * project.contract_insurance_percentage / 100 %}
+        {% set contract_guarantee_performance = project.contract_price *
+        project.contract_guarantee_performance_percentage / 100 %}
+        {% set contract_price_pure = project.contract_price - contract_insurance %}
+        {% set contract_university_overhead = contract_price_pure * project.contract_university_overhead_percentage /
+        100 %}
+        {% set contract_weri_overhead = contract_price_pure * project.contract_weri_overhead_percentage / 100 %}
+        {% set contract_project_price_pure = contract_price_pure - contract_university_overhead - contract_weri_overhead
+        %}
+        {% set total_contract_received,
+        total_insurance,
+        total_guarantee_performance,
+        total_university_overhead,
+        total_weri_overhead,
+        total_tax,
+        total_project_received = project.received_employer | calc_received_employer %}
+        {% set total_payment_employees = project.payment_employees | calc_payment_employees %}
+
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded-circle bg-label-primary"><i
+                                        class="bx bx-dollar fs-4"></i></span>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-0 me-2">{{ "{:,}".format(project.contract_price | int) }} ریال
+                                </h5>
+                                <small class="text-muted">مبلغ کل قرارداد</small>
+                            </div>
+                        </div>
+                        <!-- <div id="conversationChart"></div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded-circle bg-label-warning"><i
+                                        class="bx bx-loader-circle fs-4"></i></span>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-0 me-2">{{("{:,}".format(contract_insurance | round(0) |
+                                    int))}} ریال</h5>
+                                <small class="text-muted">مبلغ بیمه قرارداد</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded-circle bg-label-success"><i
+                                        class="bx bx-dollar fs-4"></i></span>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-0 me-2">{{("{:,}".format(contract_price_pure | round(0) |
+                                    int))}} ریال</h5>
+                                <small class="text-muted">مبلغ خالص قرارداد</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded-circle bg-label-primary"><i
+                                        class="bx bxs-buildings fs-4"></i></span>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-0 me-2">{{("{:,}".format(contract_university_overhead |
+                                    round(0) | int))}} ریال</h5>
+                                <small class="text-muted">مبلغ بالاسری دانشگاه</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded-circle bg-label-success"><i
+                                        class="bx bxs-building-house fs-4"></i></span>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-0 me-2">{{("{:,}".format(contract_weri_overhead | round(0) |
+                                    int))}} ریال</h5>
+                                <small class="text-muted">مبلغ بالاسری پژوهشکده</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded-circle bg-label-secondary"><i
+                                        class="bx bx-user fs-4"></i></span>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-0 me-2">{{("{:,}".format(contract_project_price_pure | round(0)
+                                    | int))}} ریال</h5>
+                                <small class="text-muted">مبلغ خالص پروژه (+مالیات)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">خالص قرارداد</h5>
+                </div>
+                <div class="card-body d-flex align-items-end justify-content-between">
+                    <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="success" data-series={% if contract_price_pure !=0
+                                %}{{(100 * total_contract_received / contract_price_pure) | round(0) | int | string }}{%
+                                else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format(total_contract_received | round(0) | int))}} ریال</h6>
+                                <small class="text-muted">پرداخت‌شده</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="danger" data-series={% if contract_price_pure !=0
+                                %}{{(100 - (100 * total_contract_received / contract_price_pure)) | round(0) | int |
+                                string }}{% else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format((contract_price_pure - total_contract_received) |
+                                    round(0) | int))}} ریال</h6>
+                                <small class="text-muted">باقی‌مانده</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">مبالغ نزد کارفرما</h5>
+                </div>
+                <div class="card-body d-flex align-items-end justify-content-between">
+                    <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="warning" data-series={% if
+                                contract_guarantee_performance !=0 %}{{ (100 * total_guarantee_performance /
+                                contract_guarantee_performance) | round(0) | int | string }}{% else %}0{% endif %}>
+                            </div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format(total_guarantee_performance | round(0) | int))}} ریال
+                                </h6>
+                                <small class="text-muted">حسن‌انجام‌کار</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="warning" data-series={% if contract_insurance !=0 %}{{
+                                (100 * total_insurance / contract_insurance) | round(0) | int | string }}{% else %}0{%
+                                endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format(total_insurance | round(0) | int))}} ریال</h6>
+                                <small class="text-muted">بیمه</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">بالاسری پژوهشکده</h5>
+                </div>
+                <div class="card-body d-flex align-items-end justify-content-between">
+                    <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="success" data-series={% if contract_weri_overhead !=0
+                                %}{{ (100 * total_weri_overhead / contract_weri_overhead) | round(0) | int | string }}{%
+                                else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format(total_weri_overhead | round(0) | int))}} ریال</h6>
+                                <small class="text-muted">پرداخت‌شده</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="danger" data-series={% if contract_weri_overhead !=0
+                                %}{{ (100 - (100 * total_weri_overhead / contract_weri_overhead)) | round(0) | int |
+                                string }}{% else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format((contract_weri_overhead - total_weri_overhead) |
+                                    round(0) | int))}} ریال</h6>
+                                <small class="text-muted">باقی‌مانده</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">بالاسری دانشگاه</h5>
+                </div>
+                <div class="card-body d-flex align-items-end justify-content-between">
+                    <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="success" data-series={% if
+                                contract_university_overhead !=0 %}{{ (100 * total_university_overhead /
+                                contract_university_overhead) | round(0) | int | string }}{% else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format(total_university_overhead | round(0) | int))}} ریال
+                                </h6>
+                                <small class="text-muted">پرداخت‌شده</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="danger" data-series={% if contract_university_overhead
+                                !=0 %}{{ (100 - (100 * total_university_overhead / contract_university_overhead)) |
+                                round(0) | int | string }}{% else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format((contract_university_overhead -
+                                    total_university_overhead) | round(0) | int))}} ریال</h6>
+                                <small class="text-muted">باقی‌مانده</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">خالص پروژه (+مالیات)</h5>
+                </div>
+                <div class="card-body d-flex align-items-end justify-content-between">
+                    <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="success" data-series={% if contract_project_price_pure
+                                !=0 %}{{ (100 * total_project_received / contract_project_price_pure) | round(0) | int |
+                                string }}{% else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format(total_project_received | round(0) | int))}} ریال</h6>
+                                <small class="text-muted">پرداخت‌شده</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="danger" data-series={% if contract_project_price_pure
+                                !=0 %}{{ (100 - (100 * total_project_received / contract_project_price_pure)) | round(0)
+                                | int | string }}{% else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format((contract_project_price_pure - total_project_received)
+                                    | round(0) | int))}} ریال</h6>
+                                <small class="text-muted">باقی‌مانده</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">پرداختی به پژوهشگران (+مالیات)</h5>
+                </div>
+                <div class="card-body d-flex align-items-end justify-content-between">
+                    <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="success" data-series={% if total_project_received !=0
+                                %}{{ (100 * total_payment_employees / total_project_received) | round(0) | int | string
+                                }}{% else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format(total_payment_employees | round(0) | int))}} ریال</h6>
+                                <small class="text-muted">پرداخت‌شده</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-content-center">
+                            <div class="chart-report" data-color="danger" data-series={% if total_project_received !=0
+                                %}{{ (100 - (100 * total_payment_employees / total_project_received)) | round(0) | int |
+                                string }}{% else %}0{% endif %}></div>
+                            <div class="chart-info ms-2">
+                                <h6 class="mb-0">{{("{:,}".format((total_project_received - total_payment_employees) |
+                                    round(0) | int))}} ریال</h6>
+                                <small class="text-muted">باقی‌مانده</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Hoverable Table rows -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between w-100 align-items-center">
+            <h5 class="card-action-title mb-0">جدول صورتحساب‌های دریافتی از کارفرما</h5>
+            <a href="{{ url_for('database.home') }}#target-add-received-employer" class="card-action-element mb-0"><i class='bx bx-list-plus me-1'></i>اضافه کردن صورتحساب جدید</a>
+        </div>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>مرحله</th>
+                        <th>تاریخ درخواست</th>
+                        <th>مبلغ درخواستی</th>
+                        <th>تاریخ دریافت</th>
+                        <th>مبلغ دریافتی</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    {% for pre in project.received_employer %}
+                    <tr>
+                        <td>
+                            <span class="fw-medium">{{pre.name}}</span>
+                        </td>
+                        <td>
+                            {{pre.requested_date}}
+                        </td>
+                        <td>
+                            {{"{:,}".format(pre.requested_amount)}} ریال
+                        </td>
+                        <td>
+                            {{pre.received_date}}
+                        </td>
+                        <td>
+                            {{"{:,}".format(pre.received_amount)}} ریال
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                    data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{url_for('dashboard.update_received_employer', received_employer_id=pre.id)}}"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
+                                    <a class="dropdown-item" href="{{url_for('dashboard.delete_received_employer', received_employer_id=pre.id, project_id=project.id)}}"><i class="bx bx-trash me-1"></i>
+                                        حذف</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--/ Hoverable Table rows -->
+
+
+
+
+    <!-- Hoverable Table rows -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between w-100 align-items-center">
+            <h5 class="card-action-title mb-0">جدول پرداختی‌ها به پژوهشگران</h5>
+            <a href="{{ url_for('database.home') }}#target-add-payment-employees" class="card-action-element mb-0"><i class='bx bx-list-plus me-1'></i>اضافه کردن پرداختی جدید</a>
+        </div>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>پژوهشگر</th>
+                        <th>مرحله واریزی کارفرما</th>
+                        <th>تاریخ</th>
+                        <th>مبلغ</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    {% for ppe in project.payment_employees %}
+                    <tr>
+                        <td>
+                            <span class="fw-medium">{{ppe.employee.full_name}}</span>
+                        </td>
+                        <td>
+                            {{ppe.received_employer.name}}
+                        </td>
+                        <td>
+                            {{ppe.payment_date}}
+                        </td>
+                        <td>
+                            {{"{:,}".format(ppe.payment_amount)}} ریال
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                    data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{url_for('dashboard.update_payment_employees', payment_employees_id=ppe.id)}}"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
+                                    <a class="dropdown-item" href="{{url_for('dashboard.delete_payment_employees', payment_employees_id=ppe.id)}}"><i class="bx bx-trash me-1"></i>
+                                        حذف</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--/ Hoverable Table rows -->
+
+
+</div>

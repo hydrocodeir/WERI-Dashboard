@@ -1,0 +1,178 @@
+<!-- About User -->
+<div class="col-xl-4 col-lg-5 col-md-5">
+    <!-- General Information -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <p class="vazirbold card-text text-uppercase text-center border-bottom pb-3">{{ project.name }}</p>
+            <p class="card-text text-primary">مشخصات کلی قرارداد</p>
+            <ul class="list-unstyled mb-4">
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bxs-buildings'></i><span class="fw-medium mx-2">کارفرما:</span>
+                    <span class="text-muted">{{ project.employer}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bxs-user'></i><span class="fw-medium mx-2">ناظر کارفرما:</span>
+                    <span class="text-muted">{{ project.employer_supervisor}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bxs-user-voice'></i><span class="fw-medium mx-2">مجری پروژه:</span>
+                    <span class="text-muted">{{ project.project_manager}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bxs-user-detail'></i><span class="fw-medium mx-2">همکار اصلی پروژه:</span> <span
+                        class="text-muted">{{ project.main_colleague}}</span>
+                </li>
+            </ul>
+            <p class="card-text text-primary">مشخصات قرارداد</p>
+            <ul class="list-unstyled mb-4">
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bx-check'></i><span class="fw-medium mx-2">وضعیت قرارداد:</span>
+                    <span class="text-muted">{{ project.contract_state}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class="bx bx-chat bx-xs"></i><span class="fw-medium mx-2">شماره قرارداد:</span>
+                    <span class="text-muted">{{ project.contract_number_employer}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bx-calendar'></i><span class="fw-medium mx-2">تاریخ ابلاغ قرارداد:</span>
+                    <span class="text-muted">{{ project.contract_date}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bxs-time'></i><span class="fw-medium mx-2">مدت پیمان:</span>
+                    <span class="text-muted">{{ project.contract_period}} ماه</span>
+                </li>
+            </ul>
+            <p class="card-text text-primary">مالی قرارداد</p>
+            <ul class="list-unstyled mb-4">
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bx-dollar'></i><span class="fw-medium mx-2">مبلغ قرارداد:</span>
+                    <span class="text-muted">{{ "{:,}".format(project.contract_price) }} ریال</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bx-loader-circle'></i></i><span class="fw-medium mx-2">درصد بیمه قرارداد:</span>
+                    <span class="text-muted">%{{ project.contract_insurance_percentage}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bx-loader-circle'></i><span class="fw-medium mx-2">درصد حسن انجام کار قرارداد:</span>
+                    <span class="text-muted">%{{ project.contract_guarantee_performance_percentage}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bx-loader-circle'></i><span class="fw-medium mx-2">درصد مالیات قرارداد:</span>
+                    <span class="text-muted">%{{ project.contract_tax_percentage}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bxs-buildings'></i><span class="fw-medium mx-2">درصد بالاسری دانشگاه از قرارداد:</span>
+                    <span class="text-muted">%{{ project.contract_university_overhead_percentage}}</span>
+                </li>
+                <li class="d-flex align-items-center mb-3">
+                    <i class='bx bxs-building-house'></i><span class="fw-medium mx-2">درصد بالاسری پژوهشکده از
+                        قرارداد:</span>
+                    <span class="text-muted">%{{ project.contract_weri_overhead_percentage}}</span>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <!--/ General Information -->
+
+    <!-- Timeline -->
+    <div class="col-12">
+        <div class="card card-action mb-4">
+            <div class="card-header align-items-center">
+                <h5 class="card-action-title mb-0"><i class="bx bx-list-ul bx-sm me-2"></i>تاریخ‌های مهم پروژه</h5>
+                <div class="card-action-element btn-pinned">
+                    <div class="dropdown">
+                        <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ url_for('database.home') }}#target-add-timeline">اضافه کردن تایم‌لاین</a></li>
+                            <li><a class="dropdown-item" href={{url_for('dashboard.delete_timeline', project_id=project.id)}}>حذف کردن تایم‌لاین</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if project.timeline %}
+                    <ul class="timeline mt-3 ms-2">
+                        {% for pt in project.timeline | sort_by('date') %}    
+                            <li class="timeline-item timeline-item-transparent ps-4">
+                                <span class="timeline-point timeline-point-dark"></span>
+                                <div class="timeline-event">
+                                    <div class="timeline-header" style="align-items: baseline">
+                                        <h6 class="mb-0">{{ pt.name }}</h6>
+                                        <h6 class="text-dark">{{ pt.date }}</h>
+                                    </div>
+                                    <small class="mb-1 ms-2">{{ pt.description }}</small>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        <li class="timeline-end-indicator">
+                            <i class="bx bx-check-circle"></i>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!--/ Timeline -->
+
+    <!-- Teams -->
+    <div class="col-12">
+        <div class="card card-action mb-4">
+            <div class="card-header align-items-center">
+                <h5 class="card-action-title mb-0 text-primary">اعضای پروژه</h5>
+                <!-- <div class="card-action-element btn-pinned">
+                    <div class="dropdown">
+                        <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="javascript:void(0);">Share connections</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);">Suggest edits</a></li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li><a class="dropdown-item" href="javascript:void(0);">Report bug</a></li>
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    {% for pe in project.employee %}
+                    <li class="mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="d-flex align-items-start">
+                                <div class="avatar me-3">
+                                    <img src="{{ url_for('static', filename='img/avatars/' + (pe.avatar or 'user.png')) }}"
+                                        alt="Avatar" class="rounded-circle" />
+                                </div>
+                                <div class="me-2">
+                                    <h6 class="mb-0">{{ pe.full_name }}</h6>
+                                    <small class="text-muted">{{ pe.university }}</small>
+                                </div>
+                            </div>
+                            <div class="ms-auto">
+                                <button class="btn btn-label-danger p-1 btn-sm"
+                                    onclick="window.location.href='{{url_for('dashboard.delete_employee', employee_id=pe.id, project_id=project.id)}}'">
+                                    <i class='bx bxs-trash'></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    <li class="text-center">
+
+                        <a href="{{ url_for('database.home') }}#target-add-employee">
+                            <i class="bx bx-user-plus"></i> اضافه کردن پژوهشگر جدید به پروژه</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--/ Teams -->
+</div>
+<!--/ About User -->

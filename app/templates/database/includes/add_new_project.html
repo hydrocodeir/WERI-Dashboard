@@ -1,0 +1,176 @@
+<!-- Form Add New Record -->
+<div class="col-12 mb-4">
+    <div class="bs-stepper wizard-numbered mt-2">
+
+        <!-- Error Form -->
+        {% if new_project_form.is_submitted() and new_project_form.errors|count > 0 %}
+        <div class="alert-danger p-3" role="alert">
+            {{ new_project_form.errors|count }} خطا رخ داده است:
+            <ul>
+                {% for field_name, field_errors in new_project_form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <li>{{ new_project_form[field_name].label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}    
+        <!-- / Error Form -->
+
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#project-1">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">مشخصات پروژه</span>
+                        <span class="bs-stepper-subtitle">وارد کردن مشخصات پروژه</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#project-2">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">مشخصات قرارداد</span>
+                        <span class="bs-stepper-subtitle">وارد کردن مشخصات قرارداد</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#project-3">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">3</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">درصدهای قرارداد</span>
+                        <span class="bs-stepper-subtitle">وارد کردن درصدهای قرارداد</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="bs-stepper-content">
+            <form action="{{ url_for('database.home') }}" method="POST" novalidate>
+                {{ new_project_form.csrf_token }}
+                <div id="project-1" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را وارد کرده و بر روی دکمه «بعدی» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            {{ new_project_form.name.label(class="form-label") }}
+                            {{ new_project_form.name(class="form-control") }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ new_project_form.employer.label(class="form-label") }}
+                            {{ new_project_form.employer(class="select2") }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ new_project_form.employer_supervisor.label(class="form-label") }}
+                            {{ new_project_form.employer_supervisor(class="form-control") }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ new_project_form.project_manager.label(class="form-label") }}
+                            {{ new_project_form.project_manager(class="select2") }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ new_project_form.main_colleague.label(class="form-label") }}
+                            {{ new_project_form.main_colleague(class="select2") }}
+                        </div>
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-label-secondary btn-prev disabled" style="color: white;">
+                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <a class="btn btn-primary btn-next" style="color: white;">
+                                <span class="d-sm-inline-block d-none" >بعدی</span>
+                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="project-2" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را وارد کرده و بر روی دکمه «بعدی» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_number_employer.label(class="form-label") }}
+                            {{ new_project_form.contract_number_employer(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_number_university.label(class="form-label") }}
+                            {{ new_project_form.contract_number_university(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_date.label(class="form-label") }}
+                            {{ new_project_form.contract_date(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_period.label(class="form-label") }}
+                            {{ new_project_form.contract_period(class="select2") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_state.label(class="form-label") }}
+                            {{ new_project_form.contract_state(class="select2") }}
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev" style="color: white;">
+                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <a class="btn btn-primary btn-next" style="color: white;">
+                                <span class="d-sm-inline-block d-none" >بعدی</span>
+                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="project-3" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را وارد کرده و بر روی دکمه «اضافه کردن» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_price.label(class="form-label") }}
+                            {{ new_project_form.contract_price(class="form-control numeral-mask") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_insurance_percentage.label(class="form-label") }}
+                            {{ new_project_form.contract_insurance_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_guarantee_performance_percentage.label(class="form-label") }}
+                            {{ new_project_form.contract_guarantee_performance_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_tax_percentage.label(class="form-label") }}
+                            {{ new_project_form.contract_tax_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_university_overhead_percentage.label(class="form-label") }}
+                            {{ new_project_form.contract_university_overhead_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_project_form.contract_weri_overhead_percentage.label(class="form-label") }}
+                            {{ new_project_form.contract_weri_overhead_percentage(class="form-control") }}
+                        </div>
+                        <input type="hidden" name="form_id" value="project">
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev" style="color: white;">
+                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <button type="submit" class="btn btn-success btn-submit">
+                                اضافه کردن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- / Form Add New Record -->

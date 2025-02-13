@@ -1,0 +1,24 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}
+داشبورد مدیریتی
+{% endblock %}
+
+{% block content %}
+
+<!-- ======================================================================= -->
+<!-- Container -->
+<!-- ======================================================================= -->
+<div class="container-xxl flex-grow-1 container-p-y">
+
+    <div class="row">
+        {% include 'dashboard/includes/sidebar.html' %}
+        {% include 'dashboard/includes/main.html' %}
+    </div>
+
+</div>
+<!-- ======================================================================= -->
+<!-- /Container -->
+<!-- ======================================================================= -->
+
+{% endblock %}

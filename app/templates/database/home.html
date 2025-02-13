@@ -1,0 +1,61 @@
+{% extends 'database/base.html' %}
+
+{% block title %} مدیریت پایگاه داده {% endblock %}
+
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+
+  <!-- Add New Project -->
+  <div class="row">
+    <div class="col-12 mb-2">
+        <div class="divider">
+            <div class="divider-text fs-4">افزودن پروژه</div>
+        </div>
+    </div>
+    {% include 'database/includes/add_new_project.html' %}
+  </div>
+  <!-- / Add New Project -->
+
+  <!-- Add New Employer Amount Received -->
+  <div class="row" id="target-add-received-employer">
+    <div class="col-12 mb-2">
+        <div class="divider">
+            <div class="divider-text fs-4">افزودن واریزی کارفرما</div>
+        </div>
+    </div>
+    {% include 'database/includes/add_new_received_employer.html' %}
+  </div>
+  <!-- / Add New Project -->
+
+  <!-- Add Employee Payment -->
+  <div class="row" id="target-add-payment-employees">
+    <div class="col-12 mb-2">
+        <div class="divider">
+            <div class="divider-text fs-4">افزودن پرداختی به پژوهشگر</div>
+        </div>
+    </div>
+    {% include 'database/includes/add_new_payment_employees.html' %}
+  </div>
+  <!-- / Add Employee Payment -->
+
+
+
+  <!-- Settings -->
+  <div class="row">
+    <div class="col-12 mb-2">
+        <div class="divider">
+            <div class="divider-text fs-4">تنظیمات</div>
+        </div>
+    </div>
+    {% include 'database/includes/add_new_employee.html' %}
+    {% include 'database/includes/add_new_timeline.html' %}
+    {% include 'database/includes/add_employee_to_project.html' %}
+  </div>
+  <!-- / Settings -->
+
+</div>
+{% endblock %}
+
+
+

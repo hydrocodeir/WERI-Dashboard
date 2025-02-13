@@ -1,0 +1,171 @@
+<!-- Form Add New Record -->
+<div class="col-12 mb-4">
+    <div class="bs-stepper wizard-numbered mt-2">
+
+        <!-- Error Form -->
+        {% if form.is_submitted() and form.errors|count > 0 %}
+        <div class="alert-danger p-3" role="alert">
+            {{ form.errors|count }} خطا رخ داده است:
+            <ul>
+                {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <li>{{ form[field_name].label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}    
+        <!-- / Error Form -->
+
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#project-1">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">اطلاعات درخواست از کارفرما</span>
+                        <span class="bs-stepper-subtitle">وارد اطلاعات درخواست از کارفرما</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#project-2">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">اطلاعات واریزی به دانشگاه</span>
+                        <span class="bs-stepper-subtitle">وارد کردن اطلاعات واریزی به دانشگاه</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#project-3">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">3</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">کسورات و بالاسری‌ها</span>
+                        <span class="bs-stepper-subtitle">وارد کردن کسورات و بالاسری‌ها</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="bs-stepper-content">
+            <form action="" method="POST" novalidate>
+                {{ form.csrf_token }}
+                <div id="project-1" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را ویرایش کرده و بر روی دکمه «بعدی» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-9">
+                            {{ form.re_project_id.label(class="form-label") }}
+                            {{ form.re_project_id(class="select2") }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form.name.label(class="form-label") }}
+                            {{ form.name(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.requested_date.label(class="form-label") }}
+                            {{ form.requested_date(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.requested_amount.label(class="form-label") }}
+                            {{ form.requested_amount(class="form-control numeral-mask") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.requested_letter_number.label(class="form-label") }}
+                            {{ form.requested_letter_number(class="form-control") }}
+                        </div>
+                        <div class="col-sm-12">
+                            {{ form.requested_description.label(class="form-label") }}
+                            {{ form.requested_description(class="form-control") }}
+                        </div>
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-label-secondary btn-prev disabled" style="color: white;">
+                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <a class="btn btn-primary btn-next" style="color: white;">
+                                <span class="d-sm-inline-block d-none" >بعدی</span>
+                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="project-2" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را ویرایش کرده و بر روی دکمه «بعدی» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            {{ form.received_date.label(class="form-label") }}
+                            {{ form.received_date(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.received_amount.label(class="form-label") }}
+                            {{ form.received_amount(class="form-control numeral-mask") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.received_letter_number.label(class="form-label") }}
+                            {{ form.received_letter_number(class="form-control") }}
+                        </div>
+                        <div class="col-12">
+                            {{ form.received_description.label(class="form-label") }}
+                            {{ form.received_description(class="form-control") }}
+                        </div>
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev" style="color: white;">
+                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <a class="btn btn-primary btn-next" style="color: white;">
+                                <span class="d-sm-inline-block d-none" >بعدی</span>
+                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="project-3" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را ویرایش کرده و بر روی دکمه «بروزرسانی کردن» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-4">
+                            {{ form.insurance_percentage.label(class="form-label") }}
+                            {{ form.insurance_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.guarantee_performance_percentage.label(class="form-label") }}
+                            {{ form.guarantee_performance_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.tax_percentage.label(class="form-label") }}
+                            {{ form.tax_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.university_overhead_percentage.label(class="form-label") }}
+                            {{ form.university_overhead_percentage(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form.weri_overhead_percentage.label(class="form-label") }}
+                            {{ form.weri_overhead_percentage(class="form-control") }}
+                        </div>
+                        <input type="hidden" name="form_id" value="update_received_employer">
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev" style="color: white;">
+                                <i class="bx bx-chevron-right bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <button type="submit" class="btn btn-success btn-submit">
+                                بروزرسانی کردن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- / Form Add New Record -->

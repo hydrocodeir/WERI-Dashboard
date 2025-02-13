@@ -1,0 +1,82 @@
+<!-- Form Add New Record -->
+<div class="col-12 mb-4">
+    <div class="bs-stepper wizard-numbered-ep mt-2">
+
+        <!-- Error Form -->
+        {% if new_payment_employees_form.is_submitted() and new_payment_employees_form.errors|count > 0 %}
+        <div class="alert-danger p-3" role="alert">
+            {{ new_payment_employees_form.errors|count }} خطا رخ داده است:
+            <ul>
+                {% for field_name, field_errors in new_payment_employees_form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <li>{{ new_payment_employees_form[field_name].label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}    
+        <!-- / Error Form -->
+
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#employee_payment-1">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">مشخصات پرداختی به پژوهشگر</span>
+                        <span class="bs-stepper-subtitle">وارد کردن مشخصات پرداختی به پژوهشگر</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+        </div>
+
+        <div class="bs-stepper-content">
+            <form action="{{ url_for('database.home') }}" method="POST" novalidate>
+                {{ new_payment_employees_form.csrf_token }}
+                <div id="employee_payment-1" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را وارد کرده و بر روی دکمه «اضافه کردن» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-8">
+                            {{ new_payment_employees_form.pe_project_id.label(class="form-label") }}
+                            {{ new_payment_employees_form.pe_project_id(class="select2") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_payment_employees_form.pe_employee_id.label(class="form-label") }}
+                            {{ new_payment_employees_form.pe_employee_id(class="select2") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_payment_employees_form.pe_received_employer_id.label(class="form-label") }}
+                            {{ new_payment_employees_form.pe_received_employer_id(class="select2") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_payment_employees_form.payment_date.label(class="form-label") }}
+                            {{ new_payment_employees_form.payment_date(class="form-control") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ new_payment_employees_form.payment_amount.label(class="form-label") }}
+                            {{ new_payment_employees_form.payment_amount(class="form-control numeral-mask") }}
+                        </div>
+                        <div class="col-12">
+                            {{ new_payment_employees_form.payment_description.label(class="form-label") }}
+                            {{ new_payment_employees_form.payment_description(class="form-control") }}
+                        </div>
+                        <input type="hidden" name="form_id" value="payment_employees">
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev-ep disabled" style="color: white;">
+                                <i class="bx bx-chevron-right bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <button type="submit" class="btn btn-success btn-submit-ep">
+                                اضافه کردن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- / Form Add New Record -->

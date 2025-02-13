@@ -1,0 +1,158 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}
+داشبورد مدیریتی
+{% endblock %}
+
+{% block content %}
+
+<!-- ======================================================================= -->
+<!-- Container -->
+<!-- ======================================================================= -->
+<div class="container-xxl flex-grow-1 container-p-y">
+
+  <!-- Project Cards -->
+  <div class="row g-4">
+    {% for project in projects %}
+    <div class="col-xl-4 col-lg-6 col-md-6">
+      <div class="card h-100">
+        <div class="card-header border-bottom bg-lighter h-100">
+          <div class="d-flex align-items-start">
+            <div class="d-flex align-items-start">
+              <!-- <div class="avatar me-3">
+                  <img src="../../assets/img/icons/brands/social-label.png" alt="Avatar" class="rounded-circle" />
+                </div> -->
+              <div class="me-2">
+                <h6 class="my-0 py-0 line-h"><a href="{{ url_for('dashboard.project', project_id=project.id ) }}" class="h6 stretched-link"> {{ project.name | truncate(120, True) }} </a></h6>
+                <!-- <div class="client-info d-flex align-items-center text-nowrap mt-3">
+                  <h6 class="mb-0 me-1">کارفرما:</h6>
+                  <span>{{ project.employer }}</span>
+                </div> -->
+              </div>
+            </div>
+            <div class="ms-auto">
+              <div class="dropdown z-2">
+                <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="{{ url_for('dashboard.project', project_id=project.id ) }}">مشاهده جزئیات</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('dashboard.update_project', project_id=project.id ) }}">ویرایش</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('dashboard.delete_project', project_id=project.id ) }}">حذف</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body py-3">
+          <div class="d-flex align-items-center flex-wrap">
+            <div class="bg-yellow  p-2 rounded me-auto mb-3">
+              <h6 class="mb-1">{{ "{:,}".format(project.contract_price) }} ریال</h6>
+              <span>مبلغ قرارداد</span>
+            </div>
+            <div class="text-start mb-3">
+              <h6 class="mb-1">تاریخ ابلاغ: <span class="text-body fw-normal">{{ project.contract_date |
+                  show_persian_date }}</span></h6>
+              <h6 class="mb-1">مدت پیمان: <span class="text-body fw-normal">{{ project.contract_period }} ماه</span>
+              </h6>
+            </div>
+          </div>
+          {% set pm_avater, mc_avatar = project.id | find_avatar %}
+          <div class="d-flex align-items-center mt-1 ms-2">
+            <ul class="list-unstyled d-flex align-items-center avatar-group mb-0 z-2">
+              <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                title="{{project.project_manager}}" class="avatar avatar-sm pull-up">
+                <img class="rounded-circle" src="{{ url_for('static', filename='img/avatars/' + pm_avater) }}" alt="Avatar" />
+              </li>
+              <li>
+                <h6 class="m-0 ms-2">مجری پروژه: <span class="text-body fw-normal">{{ project.project_manager }}</span>
+                </h6>
+              </li>
+            </ul>
+          </div>
+          <div class="d-flex align-items-center ms-2">
+            <ul class="list-unstyled d-flex align-items-center avatar-group mb-0 z-2">
+              <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                title="{{project.main_colleague}}" class="avatar avatar-sm pull-up">
+                <img class="rounded-circle" src="{{ url_for('static', filename='img/avatars/' + mc_avatar) }}" alt="Avatar" />
+              </li>
+              <li>
+                <h6 class="m-0 ms-2">همکار اصلی پروژه: <span class="text-body fw-normal">{{ project.main_colleague
+                    }}</span></h6>
+              </li>
+            </ul>
+          </div>
+          <div class="d-flex align-items-center ms-2">
+            <ul class="list-unstyled d-flex align-items-center avatar-group mb-0 z-2">
+              <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                title="{{project.employer_supervisor}}" class="avatar avatar-sm pull-up">
+                <img class="rounded-circle" src="../../assets/img/avatars/user.png" alt="Avatar" />
+              </li>
+              <li>
+                <h6 class="m-0 ms-2">ناظر پروژه: <span class="text-body fw-normal">{{ project.employer_supervisor
+                    }}</span></h6>
+              </li>
+            </ul>
+          </div>
+          <div class="d-flex align-items-center ms-2">
+            <ul class="list-unstyled d-flex align-items-center avatar-group mb-0 z-2">
+              <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                title="{{project.employer}}" class="avatar avatar-sm pull-up">
+                <img class="rounded-circle" src="../../assets/img/avatars/company.png" alt="Avatar" />
+              </li>
+              <li>
+                <h6 class="m-0 ms-2">کارفرما: <span class="text-body fw-normal">{{ project.employer
+                    }}</span></h6>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        
+        <div class="card-body border-top">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <!-- <small>Task: 290/344</small> -->
+            <small>80% پیشرفت پروژه</small>
+          </div>
+          <div class="progress mb-3" style="height: 8px">
+            <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0"
+              aria-valuemax="100"></div>
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center">
+              <ul class="list-unstyled d-flex align-items-center avatar-group mb-0 z-2">
+                {% for employee in project.employee %}
+                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                  title="{{employee.full_name}}" class="avatar avatar-sm pull-up">
+                  <img class="rounded-circle" src="{{ url_for('static', filename='img/avatars/' + (employee.avatar or 'user.png')) }}" alt="Avatar" />
+                </li>
+                {% endfor %}
+                <li><small class="ms-2">{{ project.employee | count }} همکار پژوهشی</small></li>
+              </ul>
+            </div>
+            <div class="ms-auto">
+              {% if project.contract_state == "در حال انجام" %}
+              <span class="badge bg-label-success ms-auto text-black">{{ project.contract_state }}</span>
+              {% elif project.contract_state == "در حال تسویه حساب" %}
+              <span class="badge bg-label-warning ms-auto text-black">{{ project.contract_state }}</span>
+              {% elif project.contract_state == "خاتمه یافته" %}
+              <span class="badge bg-label-primary ms-auto text-black">{{ project.contract_state }}</span>
+              {% else %}
+              <span class="badge bg-label-secondary ms-auto text-black">{{ project.contract_state }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <!--/ Project Cards -->
+
+</div>
+<!-- ======================================================================= -->
+<!-- /Container -->
+<!-- ======================================================================= -->
+
+{% endblock %}

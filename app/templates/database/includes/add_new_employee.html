@@ -1,0 +1,86 @@
+<!-- Form Add New Record -->
+<div class="col-md-6 mb-4" id="target-add-employee">
+    <div class="bs-stepper wizard-numbered-emp mt-2">
+
+        <!-- Error Form -->
+        {% if new_employee_form.is_submitted() and new_employee_form.errors|count > 0 %}
+        <div class="alert-danger p-3" role="alert">
+            {{ new_employee_form.errors|count }} خطا رخ داده است:
+            <ul>
+                {% for field_name, field_errors in new_employee_form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <li>{{ new_employee_form[field_name].label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}    
+        <!-- / Error Form -->
+
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#employee-1">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">اضافه کردن پژوهشگر</span>
+                        <span class="bs-stepper-subtitle">مشخصات پژوهشگر را وارد کنید</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line"></div>
+        </div>
+
+        <div class="bs-stepper-content">
+            <form action="{{ url_for('database.home') }}" method="POST" enctype="multipart/form-data" novalidate>
+                {{ new_employee_form.csrf_token }}
+                <div id="employee-1" class="content">
+                    <div class="content-header mb-3">
+                        <small>لطفاً مشخصات زیر را وارد کرده و بر روی دکمه «اضافه کردن» کلیک کنید:</small>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            {{ new_employee_form.first_name.label(class="form-label") }}
+                            {{ new_employee_form.first_name(class="form-control") }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ new_employee_form.last_name.label(class="form-label") }}
+                            {{ new_employee_form.last_name(class="form-control") }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ new_employee_form.national_id.label(class="form-label") }}
+                            {{ new_employee_form.national_id(class="form-control") }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ new_employee_form.phone_number.label(class="form-label") }}
+                            {{ new_employee_form.phone_number(class="form-control") }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ new_employee_form.email.label(class="form-label") }}
+                            {{ new_employee_form.email(class="form-control") }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ new_employee_form.university.label(class="form-label") }}
+                            {{ new_employee_form.university(class="form-control") }}
+                        </div>
+                        <div class="col-sm-12">
+                            {{ new_employee_form.avatar.label(class="form-label") }}
+                            {{ new_employee_form.avatar(class="form-control") }}
+                        </div>
+                        <input type="hidden" name="form_id" value="employee">
+                        <div class="col-12 d-flex justify-content-between">
+                            <a class="btn btn-primary btn-prev-emp disabled" style="color: white;">
+                                <i class="bx bx-chevron-right bx-sm ms-sm-n2"></i>
+                                <span class="d-sm-inline-block d-none">قبلی</span>
+                            </a>
+                            <button type="submit" class="btn btn-success btn-submit-emp">
+                                اضافه کردن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- / Form Add New Record -->
