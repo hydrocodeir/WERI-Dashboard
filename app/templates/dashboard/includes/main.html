@@ -2,23 +2,168 @@
     <!-- Activity Timeline -->
     <div class="row">
 
-        {% set contract_insurance = project.contract_price * project.contract_insurance_percentage / 100 %}
-        {% set contract_guarantee_performance = project.contract_price *
-        project.contract_guarantee_performance_percentage / 100 %}
-        {% set contract_price_pure = project.contract_price - contract_insurance %}
-        {% set contract_university_overhead = contract_price_pure * project.contract_university_overhead_percentage /
+        {% set contract_price = project.contract_price %}
+        {% set contract_insurance = contract_price * project.contract_insurance_percentage / 100 %}
+        {% set contract_guarantee_performance = contract_price * project.contract_guarantee_performance_percentage / 100
+        %}
+
+        {% set contract_university_overhead = project.contract_price * project.contract_university_overhead_percentage /
         100 %}
+        {% set contract_price_pure = project.contract_price - contract_insurance - contract_guarantee_performance %}
         {% set contract_weri_overhead = contract_price_pure * project.contract_weri_overhead_percentage / 100 %}
+
         {% set contract_project_price_pure = contract_price_pure - contract_university_overhead - contract_weri_overhead
         %}
-        {% set total_contract_received,
+
+        {% set total_contract_requested,
         total_insurance,
         total_guarantee_performance,
+        total_contract_received,
         total_university_overhead,
         total_weri_overhead,
         total_tax,
         total_project_received = project.received_employer | calc_received_employer %}
+
         {% set total_payment_employees = project.payment_employees | calc_payment_employees %}
+
+
+        <!-- Total Contract Free -->
+        {% set total_contract_free = (total_contract_requested - total_insurance - total_guarantee_performance) |
+        round(0) | int %}
+
+        {% if contract_price !=0 %}
+        {% set total_contract_free_percent = (100 * total_contract_free / contract_price) | round(0) | int %}
+        {% else %}
+        {% set total_contract_free_percent = 0 %}
+        {% endif %}
+        <!-- /Total Contract Free -->
+
+
+        <!-- Total Contract Remaining -->
+        {% set total_contract_remaining = (contract_price - total_contract_free - total_insurance -
+        total_guarantee_performance) | round(0) | int %}
+
+        {% if contract_price !=0 %}
+        {% set total_contract_remaining_percent = (100 * total_contract_remaining / contract_price) | round(0) | int %}
+        {% else %}
+        {% set total_contract_remaining_percent = 0 %}
+        {% endif %}
+        <!-- /Total Contract Remaining -->
+
+
+        <!-- Total Blocked Insurance -->
+        {% set total_blocked_insurance = (total_insurance) | round(0) | int %}
+
+        {% if contract_price !=0 %}
+        {% set total_blocked_insurance_percent = (100 * total_blocked_insurance / contract_price) | round(0) | int %}
+        {% else %}
+        {% set total_blocked_insurance_percent = 0 %}
+        {% endif %}
+        <!-- /Total Blocked Insurance -->
+
+
+        <!-- Total Blocked Guarantee Performance -->
+        {% set total_blocked_guarantee_performance = (total_guarantee_performance) | round(0) | int %}
+
+        {% if contract_price !=0 %}
+        {% set total_blocked_guarantee_performance_percent = (100 * total_blocked_guarantee_performance /
+        contract_price) | round(0) | int %}
+        {% else %}
+        {% set total_blocked_guarantee_performance_percent = 0 %}
+        {% endif %}
+        <!-- /Total Blocked Guarantee Performance -->
+
+
+
+        <div class="col-12">
+            <div class="divider text-center">
+                <div class="divider-text">اطلاعات مربوط به قرارداد</div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-widget-separator-wrapper">
+                    <div class="card-body card-widget-separator">
+                        <div class="row gy-4 gy-sm-1">
+                            <div class="col-sm-6 col-lg-3">
+                                <div
+                                    class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                    <div>
+                                        <h6 class="mb-2">آزادشده</h6>
+                                        <div class="d-flex align-content-center">
+                                            <div class="chart-report" data-color="success"
+                                                data-series={{total_contract_free_percent|string}}></div>
+                                            <div class="chart-info ms-2">
+                                                <h6 class="mb-0">{{("{:,}".format(total_contract_free | round(0) |
+                                                    int))}} ریال</h6>
+                                                <small class="text-muted"><span
+                                                        class="badge bg-label-success">{{total_contract_free_percent|string}}%</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none me-4" />
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div
+                                    class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+                                    <div>
+                                        <h6 class="mb-2">باقی‌مانده</h6>
+                                        <div class="d-flex align-content-center">
+                                            <div class="chart-report" data-color="danger"
+                                                data-series={{total_contract_remaining_percent|string}}></div>
+                                            <div class="chart-info ms-2">
+                                                <h6 class="mb-0">{{("{:,}".format(total_contract_remaining | round(0) |
+                                                    int))}} ریال</h6>
+                                                <small class="text-muted"><span
+                                                        class="badge bg-label-danger">{{total_contract_remaining_percent|string}}%</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none" />
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div
+                                    class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
+                                    <div>
+                                        <h6 class="mb-2">بازداشت بیمه</h6>
+                                        <div class="d-flex align-content-center">
+                                            <div class="chart-report" data-color="secondary"
+                                                data-series={{total_blocked_insurance_percent|string}}></div>
+                                            <div class="chart-info ms-2">
+                                                <h6 class="mb-0">{{("{:,}".format(total_blocked_insurance | round(0) |
+                                                    int))}} ریال</h6>
+                                                <small class="text-muted"><span
+                                                        class="badge bg-label-secondary">{{total_blocked_insurance_percent|string}}%</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-2">بازداشت حسن‌انجام‌کار</h6>
+                                        <div class="d-flex align-content-center">
+                                            <div class="chart-report" data-color="primary"
+                                                data-series={{total_blocked_guarantee_performance_percent|string}}>
+                                            </div>
+                                            <div class="chart-info ms-2">
+                                                <h6 class="mb-0">{{("{:,}".format(total_blocked_guarantee_performance |
+                                                    round(0) | int))}} ریال</h6>
+                                                <small class="text-muted"><span
+                                                        class="badge bg-label-primary">{{total_blocked_guarantee_performance_percent|string}}%</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
         <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
             <div class="card">

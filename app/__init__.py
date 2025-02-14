@@ -78,15 +78,18 @@ def find_avatar(project_id):
     
 
 @app.template_filter('calc_received_employer')
-def calc_received_employer(received_employer):
-    total_contract_received = sum(re.received_amount for re in received_employer)
+def calc_received_employer(received_employer):    
+    total_contract_requested = sum(re.requested_amount for re in received_employer)
     total_insurance = sum((re.requested_amount * re.insurance_percentage / 100) for re in received_employer)
     total_guarantee_performance = sum((re.requested_amount * re.guarantee_performance_percentage / 100) for re in received_employer)
+    
+       
+    total_contract_received = sum(re.received_amount for re in received_employer)
     total_university_overhead = sum((re.received_amount * re.university_overhead_percentage / 100) for re in received_employer)
     total_weri_overhead = sum((re.received_amount * re.weri_overhead_percentage / 100) for re in received_employer)
     total_tax = sum((re.received_amount * re.tax_percentage / 100) for re in received_employer)
     total_project_received = total_contract_received - total_university_overhead - total_weri_overhead
-    return total_contract_received, total_insurance, total_guarantee_performance, total_university_overhead, total_weri_overhead, total_tax, total_project_received
+    return total_contract_requested, total_insurance, total_guarantee_performance, total_contract_received, total_university_overhead, total_weri_overhead, total_tax, total_project_received
 
 @app.template_filter('calc_payment_employees')
 def calc_payment_employees(payment_employees):
