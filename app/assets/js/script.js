@@ -1,5 +1,8 @@
 
+
 $(document).ready(function () {
+    jalaliDatepicker.startWatch();
+
     $("#pe_project_id").on("change.select2", function () {
         let projectId = $(this).val();
         fetch(`/get_parameter_employee_payment/${projectId}`)

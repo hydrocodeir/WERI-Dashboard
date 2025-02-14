@@ -333,7 +333,8 @@
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between w-100 align-items-center">
             <h5 class="card-action-title mb-0">جدول صورتحساب‌های دریافتی از کارفرما</h5>
-            <a href="{{ url_for('database.home') }}#target-add-received-employer" class="card-action-element mb-0"><i class='bx bx-list-plus me-1'></i>اضافه کردن صورتحساب جدید</a>
+            <a href="{{ url_for('database.home') }}#target-add-received-employer" class="card-action-element mb-0"><i
+                    class='bx bx-list-plus me-1'></i>اضافه کردن صورتحساب جدید</a>
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table table-hover">
@@ -372,8 +373,12 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{url_for('dashboard.update_received_employer', received_employer_id=pre.id)}}"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
-                                    <a class="dropdown-item" href="{{url_for('dashboard.delete_received_employer', received_employer_id=pre.id, project_id=project.id)}}"><i class="bx bx-trash me-1"></i>
+                                    <a class="dropdown-item"
+                                        href="{{url_for('dashboard.update_received_employer', received_employer_id=pre.id)}}"><i
+                                            class="bx bx-edit-alt me-1"></i> ویرایش</a>
+                                    <a class="dropdown-item"
+                                        href="{{url_for('dashboard.delete_received_employer', received_employer_id=pre.id, project_id=project.id)}}"><i
+                                            class="bx bx-trash me-1"></i>
                                         حذف</a>
                                 </div>
                             </div>
@@ -393,7 +398,8 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between w-100 align-items-center">
             <h5 class="card-action-title mb-0">جدول پرداختی‌ها به پژوهشگران</h5>
-            <a href="{{ url_for('database.home') }}#target-add-payment-employees" class="card-action-element mb-0"><i class='bx bx-list-plus me-1'></i>اضافه کردن پرداختی جدید</a>
+            <a href="{{ url_for('database.home') }}#target-add-payment-employees" class="card-action-element mb-0"><i
+                    class='bx bx-list-plus me-1'></i>اضافه کردن پرداختی جدید</a>
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table table-hover">
@@ -428,8 +434,12 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{url_for('dashboard.update_payment_employees', payment_employees_id=ppe.id)}}"><i class="bx bx-edit-alt me-1"></i> ویرایش</a>
-                                    <a class="dropdown-item" href="{{url_for('dashboard.delete_payment_employees', payment_employees_id=ppe.id)}}"><i class="bx bx-trash me-1"></i>
+                                    <a class="dropdown-item"
+                                        href="{{url_for('dashboard.update_payment_employees', payment_employees_id=ppe.id)}}"><i
+                                            class="bx bx-edit-alt me-1"></i> ویرایش</a>
+                                    <a class="dropdown-item"
+                                        href="{{url_for('dashboard.delete_payment_employees', payment_employees_id=ppe.id)}}"><i
+                                            class="bx bx-trash me-1"></i>
                                         حذف</a>
                                 </div>
                             </div>

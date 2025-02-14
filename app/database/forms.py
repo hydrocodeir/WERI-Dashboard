@@ -272,7 +272,8 @@ class ProjectForm(FlaskForm):
             )
         ],
         render_kw={
-            "placeholder": "تاریخ ابلاغ قرارداد را وارد کنید (22-05-1402)"
+            "placeholder": "تاریخ ابلاغ قرارداد را انتخاب کنید",
+            'data-jdp': 'true'
         }
     )
     
@@ -434,7 +435,8 @@ class ReceivedEmployerForm(FlaskForm):
             )
         ],
         render_kw={
-            "placeholder": "تاریخ درخواست از کارفرما را وارد کنید (22-05-1402)"
+            "placeholder": "تاریخ درخواست از کارفرما را انتخاب کنید",
+            'data-jdp': 'true'
         }
     )
     
@@ -485,7 +487,8 @@ class ReceivedEmployerForm(FlaskForm):
             )
         ],
         render_kw={
-            "placeholder": "تاریخ واریز به دانشگاه را وارد کنید (22-05-1402)"
+            "placeholder": "تاریخ واریز به دانشگاه را انتخاب کنید",
+            'data-jdp': 'true'
         }
     )
     
@@ -659,7 +662,8 @@ class PaymentEmployeesForm(FlaskForm):
             )
         ],
         render_kw={
-            "placeholder": "تاریخ پرداخت را وارد کنید (22-05-1402)"
+            "placeholder": "تاریخ پرداخت را انتخاب کنید",
+            'data-jdp': 'true'
         }
     )
     
@@ -775,7 +779,8 @@ class TimelineForm(FlaskForm):
             )
         ],
         render_kw={
-            "placeholder": "تاریخ مرحله را وارد کنید (22-05-1402)"
+            "placeholder": "تاریخ مرحله را انتخاب کنید",
+            'data-jdp': 'true'
         }
     )
 
