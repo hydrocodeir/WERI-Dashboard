@@ -3,7 +3,7 @@ import secrets
 from flask import Blueprint, render_template, flash, redirect, url_for, request, jsonify
 from app.database.forms import EmployeeForm, ProjectForm, ReceivedEmployerForm, PaymentEmployeesForm, AssignEmployeesToProjectForm, TimelineForm
 from app.database.models import Employee, Employer, ProjectStatus, Project, ReceivedEmployer, PaymentEmployees, Timeline
-from app.extensions import db, socketio
+from app.extensions import db
 from sqlalchemy import or_, asc, desc
 from sqlalchemy.exc import IntegrityError
 from flask_login import current_user, login_required
@@ -140,6 +140,17 @@ def home():
             return redirect(location=url_for(endpoint='database.home'))
         
         elif form_id == 'received_employer' and new_received_employer_form.validate_on_submit():
+            
+            requested_amount = int(new_received_employer_form.requested_amount.data.replace(',', ''))
+            received_amount = int(new_received_employer_form.received_amount.data.replace(',', ''))
+            insurance_percentage = float(new_received_employer_form.insurance_percentage.data)
+            guarantee_performance_percentage = float(new_received_employer_form.guarantee_performance_percentage.data)
+            
+         
+            if int(received_amount) != int(requested_amount * (100 - (insurance_percentage + guarantee_performance_percentage)) / 100):
+                flash(message='حاصلضرب مقدار درخواستی در درصد بیمه و حسن انجام کار با مقدار دریافتی برابر نیست!', category='danger')
+                return redirect(location=url_for(endpoint='database.home'))
+            
             received_employer = ReceivedEmployer(
                 re_project_id = int(new_received_employer_form.re_project_id.data),
                 name = virastarStr(new_received_employer_form.name.data),

@@ -3,7 +3,7 @@ from flask import Flask
 from app.users.routes import blueprint as users_blueprint
 from app.dashboard.routes import blueprint as dashboard_blueprint
 from app.database.routes import blueprint as database_blueprint
-from app.extensions import db, migrate, login_manager, bcrypt, cache, socketio
+from app.extensions import db, migrate, login_manager, bcrypt, cache
 import app.exceptions as app_exception
 from app.database.models import Project, Employee
 
@@ -33,13 +33,15 @@ app.config.from_object('config.DevConfig')
 db.init_app(app)
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
+app.jinja_env.auto_reload = True
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 from app.users.models import User
 from app.database.models import Employee, Employer, ProjectStatus, Project
 migrate.init_app(app=app, db=db)
 login_manager.init_app(app=app)
 bcrypt.init_app(app=app)
 cache.init_app(app=app)
-socketio.init_app(app=app)
 
 login_manager.login_view = 'users.login'
 login_manager.login_message = 'لطفا ابتدا وارد حساب کاربری خود بشوید!'

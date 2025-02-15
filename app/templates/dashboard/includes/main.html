@@ -6,11 +6,46 @@
         {% set contract_employer_insurance = contract_employer * project.contract_insurance_percentage / 100 %}
         {% set contract_employer_guarantee_performance = contract_employer * project.contract_guarantee_performance_percentage / 100 %}
         {% set contract_university = contract_employer - contract_employer_insurance %}
-        {% set contract_university_overhead = contract_university * project.contract_university_overhead_percentage / 100 %}
-        {% set contract_weri_overhead = contract_university * project.contract_weri_overhead_percentage / 100 %}
-        {% set contract_tax = contract_university * project.contract_tax_percentage / 100 %}
-        {% set contract_manager = contract_university - contract_university_overhead - contract_weri_overhead - contract_tax %}
 
+
+        <!-- Contract University Overhead -->
+        {% set contract_university_overhead = contract_university * project.contract_university_overhead_percentage / 100 %}
+
+        {% if contract_employer !=0 %}
+            {% set contract_university_overhead_percent = (100 * contract_university_overhead / contract_employer) | round(1) | float %}
+        {% else %}
+            {% set contract_university_overhead_percent = 0 %}
+        {% endif %}
+        <!-- /Contract University Overhead -->
+
+
+        <!-- Contract WERI Overhead -->
+        {% set contract_weri_overhead = contract_university * project.contract_weri_overhead_percentage / 100 %}
+
+        {% if contract_employer !=0 %}
+            {% set contract_weri_overhead_percent = (100 * contract_weri_overhead / contract_employer) | round(1) | float %}
+        {% else %}
+            {% set contract_weri_overhead_percent = 0 %}
+        {% endif %}
+        <!-- /Contract WERI Overhead -->
+
+        {% set contract_tax = contract_university * project.contract_tax_percentage / 100 %}
+        {% set contract_project = contract_university - contract_university_overhead - contract_weri_overhead - contract_tax %}
+
+
+        <!-- Contract Project - Tax -->
+        {% set contract_project_tax = contract_university - contract_university_overhead - contract_weri_overhead %}
+
+        {% if contract_employer !=0 %}
+            {% set contract_project_tax_percent = (100 * contract_project_tax / contract_employer) | round(1) | float %}
+        {% else %}
+            {% set contract_project_tax_percent = 0 %}
+        {% endif %}
+        <!-- /Contract Project - Tax -->
+
+
+
+        
 
 
         {% set total_contract_requested,
@@ -69,9 +104,141 @@
         <!-- /Total Blocked Guarantee Performance -->
 
 
-        <!-- Total Blocked University Overhead -->
-        <!-- /Total Blocked University Overhead -->
+        <!-- Total University Overhead -->
+        {% set total_university_overhead = total_university_overhead | round(0) | int %}
 
+        {% if total_contract_free !=0 %}
+            {% set total_university_overhead_percent = (100 * total_university_overhead / total_contract_free) | round(0) | int %}
+        {% else %}
+            {% set total_university_overhead_percent = 0 %}
+        {% endif %}
+
+        <!-- /Total University Overhead -->
+
+
+        <!-- Total WERI Overhead -->
+        {% set total_weri_overhead = total_weri_overhead | round(0) | int %}
+
+        {% if total_contract_free !=0 %}
+            {% set total_weri_overhead_percent = (100 * total_weri_overhead / total_contract_free) | round(0) | int %}
+        {% else %}
+            {% set total_weri_overhead_percent = 0 %}
+        {% endif %}
+        <!-- /Total WERI Overhead -->
+
+
+        <!-- Total Tax -->
+        {% set total_tax = total_tax | round(0) | int %}
+
+        {% if total_contract_free !=0 %}
+            {% set total_tax_percent = (100 * total_tax / total_contract_free) | round(0) | int %}
+        {% else %}
+            {% set total_tax_percent = 0 %}
+        {% endif %}
+        <!-- /Total Tax -->
+
+
+        <!-- Total Tax -->
+        {% set total_project_received = total_project_received | round(0) | int %}
+
+        {% if total_contract_free !=0 %}
+            {% set total_project_received_percent = (100 * total_project_received / total_contract_free) | round(0) | int %}
+        {% else %}
+            {% set total_project_received_percent = 0 %}
+        {% endif %}
+        <!-- /Total Tax -->
+
+
+
+        <div class="col-12">
+            <div class="divider text-center">
+                <div class="divider-text">اطلاعات مالی قرارداد</div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-widget-separator-wrapper">
+                    <div class="card-body card-widget-separator">
+                        <div class="row gy-4 gy-sm-1">
+                            <div class="col-sm-6 col-lg-3">
+                                <div
+                                    class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-1 ">
+                                    <div>
+                                        <h6 class="mb-2">سهم بیمه</h6>
+                                        <div class="d-flex align-content-center">
+                                            <div class="chart-report" data-color="danger"
+                                                data-series={{project.contract_insurance_percentage|string}}></div>
+                                            <div class="chart-info ms-2">
+                                                <h6 class="mb-0">{{("{:,}".format(contract_employer_insurance | round(0) |
+                                                    int))}} ریال</h6>
+                                                <small class="text-muted"><span
+                                                        class="badge bg-label-danger">{{project.contract_insurance_percentage|string}}%</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none me-4" />
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div
+                                    class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-2">
+                                    <div>
+                                        <h6 class="mb-2">بالاسری دانشگاه</h6>
+                                        <div class="d-flex align-content-center">
+                                            <div class="chart-report" data-color="secondary"
+                                                data-series={{contract_university_overhead_percent|string}}></div>
+                                            <div class="chart-info ms-2">
+                                                <h6 class="mb-0">{{("{:,}".format(contract_university_overhead | round(0) |
+                                                    int))}} ریال</h6>
+                                                <small class="text-muted"><span
+                                                        class="badge bg-label-secondary">{{contract_university_overhead_percent|string}}%</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="d-none d-sm-block d-lg-none" />
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div
+                                    class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
+                                    <div>
+                                        <h6 class="mb-2">بالاسری پژوهشکده</h6>
+                                        <div class="d-flex align-content-center">
+                                            <div class="chart-report" data-color="secondary"
+                                                data-series={{contract_weri_overhead_percent|string}}></div>
+                                            <div class="chart-info ms-2">
+                                                <h6 class="mb-0">{{("{:,}".format(contract_weri_overhead | round(0) |
+                                                    int))}} ریال</h6>
+                                                <small class="text-muted"><span
+                                                        class="badge bg-label-secondary">{{contract_weri_overhead_percent|string}}%</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-2">سهم پروژه (+ مالیات)</h6>
+                                        <div class="d-flex align-content-center">
+                                            <div class="chart-report" data-color="primary"
+                                                data-series={{contract_project_tax_percent|string}}>
+                                            </div>
+                                            <div class="chart-info ms-2">
+                                                <h6 class="mb-0">{{("{:,}".format(contract_project_tax |
+                                                    round(0) | int))}} ریال</h6>
+                                                <small class="text-muted"><span
+                                                        class="badge bg-label-primary">{{contract_project_tax_percent|string}}%</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
         <div class="col-12">
@@ -167,7 +334,7 @@
 
         <div class="col-12">
             <div class="divider text-center">
-                <div class="divider-text">اطلاعات مربوط به دانشگاه</div>
+                <div class="divider-text">اطلاعات مربوط به پول آزاد شده</div>
             </div>
 
             <div class="card mb-4">
@@ -181,12 +348,12 @@
                                         <h6 class="mb-2">بالاسری دانشگاه</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="success"
-                                                data-series={{total_contract_free_percent|string}}></div>
+                                                data-series={{total_university_overhead_percent|string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_contract_free | round(0) |
+                                                <h6 class="mb-0">{{("{:,}".format(total_university_overhead | round(0) |
                                                     int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-success">{{total_contract_free_percent|string}}%</span></small>
+                                                        class="badge bg-label-success">{{total_university_overhead_percent|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -200,12 +367,12 @@
                                         <h6 class="mb-2">بالاسری پژوهشکده</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="success"
-                                                data-series={{total_contract_remaining_percent|string}}></div>
+                                                data-series={{total_weri_overhead_percent|string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_contract_remaining | round(0) |
+                                                <h6 class="mb-0">{{("{:,}".format(total_weri_overhead | round(0) |
                                                     int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-success">{{total_contract_remaining_percent|string}}%</span></small>
+                                                        class="badge bg-label-success">{{total_weri_overhead_percent|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -219,12 +386,12 @@
                                         <h6 class="mb-2">مالیات</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="danger"
-                                                data-series={{total_blocked_insurance_percent|string}}></div>
+                                                data-series={{total_tax_percent|string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_blocked_insurance | round(0) |
+                                                <h6 class="mb-0">{{("{:,}".format(total_tax | round(0) |
                                                     int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-danger">{{total_blocked_insurance_percent|string}}%</span></small>
+                                                        class="badge bg-label-danger">{{total_tax_percent|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -233,16 +400,16 @@
                             <div class="col-sm-6 col-lg-3">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div>
-                                        <h6 class="mb-2">سهم مجری</h6>
+                                        <h6 class="mb-2">سهم پروژه</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="primary"
-                                                data-series={{total_blocked_guarantee_performance_percent|string}}>
+                                                data-series={{total_project_received_percent|string}}>
                                             </div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_blocked_guarantee_performance |
+                                                <h6 class="mb-0">{{("{:,}".format(total_project_received |
                                                     round(0) | int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-primary">{{total_blocked_guarantee_performance_percent|string}}%</span></small>
+                                                        class="badge bg-label-primary">{{total_project_received_percent|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -275,6 +442,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
@@ -294,6 +462,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
@@ -313,6 +482,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
@@ -332,6 +502,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
@@ -351,6 +522,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body">
@@ -361,7 +533,7 @@
                                         class="bx bx-user fs-4"></i></span>
                             </div>
                             <div class="card-info">
-                                <h5 class="card-title mb-0 me-2">{{("{:,}".format(contract_manager | round(0)
+                                <h5 class="card-title mb-0 me-2">{{("{:,}".format(contract_project | round(0)
                                     | int))}} ریال</h5>
                                 <small class="text-muted">مبلغ خالص پروژه (+مالیات)</small>
                             </div>
@@ -371,6 +543,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
 
         <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
@@ -507,8 +680,8 @@
                 <div class="card-body d-flex align-items-end justify-content-between">
                     <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
                         <div class="d-flex align-content-center">
-                            <div class="chart-report" data-color="success" data-series={% if contract_manager
-                                !=0 %}{{ (100 * total_project_received / contract_manager) | round(0) | int |
+                            <div class="chart-report" data-color="success" data-series={% if contract_project
+                                !=0 %}{{ (100 * total_project_received / contract_project) | round(0) | int |
                                 string }}{% else %}0{% endif %}></div>
                             <div class="chart-info ms-2">
                                 <h6 class="mb-0">{{("{:,}".format(total_project_received | round(0) | int))}} ریال</h6>
@@ -516,11 +689,11 @@
                             </div>
                         </div>
                         <div class="d-flex align-content-center">
-                            <div class="chart-report" data-color="danger" data-series={% if contract_manager
-                                !=0 %}{{ (100 - (100 * total_project_received / contract_manager)) | round(0)
+                            <div class="chart-report" data-color="danger" data-series={% if contract_project
+                                !=0 %}{{ (100 - (100 * total_project_received / contract_project)) | round(0)
                                 | int | string }}{% else %}0{% endif %}></div>
                             <div class="chart-info ms-2">
-                                <h6 class="mb-0">{{("{:,}".format((contract_manager - total_project_received)
+                                <h6 class="mb-0">{{("{:,}".format((contract_project - total_project_received)
                                     | round(0) | int))}} ریال</h6>
                                 <small class="text-muted">باقی‌مانده</small>
                             </div>
@@ -565,15 +738,27 @@
 
 
     <!-- Hoverable Table rows -->
+    <div class="divider text-center">
+        <div class="divider-text">جدول صورتحساب‌های دریافتی از کارفرما</div>
+    </div>
     <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between w-100 align-items-center">
-            <h5 class="card-action-title mb-0">جدول صورتحساب‌های دریافتی از کارفرما</h5>
-            <a href="{{ url_for('database.home') }}#target-add-received-employer" class="card-action-element mb-0"><i
-                    class='bx bx-list-plus me-1'></i>اضافه کردن صورتحساب جدید</a>
+        <div class="card-header d-flex justify-content-center w-100 align-items-center">
+            <div class="card-action-element btn-pinned">
+                <div class="dropdown">
+                    <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <a href="{{ url_for('database.home') }}#target-add-received-employer" class="dropdown-item"><i
+                            class='bx bx-list-plus me-1'></i>اضافه کردن صورتحساب جدید</a>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table table-hover">
-                <thead class="table-light">
+                <thead class="table-dark">
                     <tr>
                         <th>مرحله</th>
                         <th>تاریخ درخواست</th>
@@ -630,15 +815,27 @@
 
 
     <!-- Hoverable Table rows -->
+    <div class="divider text-center">
+        <div class="divider-text">جدول پرداختی‌ها به پژوهشگران</div>
+    </div>
     <div class="card">
-        <div class="card-header d-flex justify-content-between w-100 align-items-center">
-            <h5 class="card-action-title mb-0">جدول پرداختی‌ها به پژوهشگران</h5>
-            <a href="{{ url_for('database.home') }}#target-add-payment-employees" class="card-action-element mb-0"><i
-                    class='bx bx-list-plus me-1'></i>اضافه کردن پرداختی جدید</a>
+        <div class="card-header d-flex justify-content-center w-100 align-items-center">
+            <div class="card-action-element btn-pinned">
+                <div class="dropdown">
+                    <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <a href="{{ url_for('database.home') }}#target-add-payment-employees" class="dropdown-item"><i
+                            class='bx bx-list-plus me-1'></i>اضافه کردن پرداختی جدید</a>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table table-hover">
-                <thead class="table-light">
+                <thead class="table-dark">
                     <tr>
                         <th>پژوهشگر</th>
                         <th>مرحله واریزی کارفرما</th>

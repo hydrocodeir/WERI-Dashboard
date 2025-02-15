@@ -112,7 +112,6 @@ def update_project(project_id):
 def delete_employee(project_id, employee_id):
     project = Project.query.get(project_id)
     employee = Employee.query.get(employee_id)
-    print(project.payment_employees)
     if project and employee:
         if project.project_manager == employee.full_name or project.main_colleague == employee.full_name:
             flash(message='پژوهشگر مورد نظر، مدیر یا همکار اصلی پروژه می‌باشد!', category='danger')
@@ -166,6 +165,15 @@ def update_received_employer(received_employer_id):
     form.re_project_id.choices = [(p.id, p.name) for p in Project.query.all() if p.id == received_employer.re_project_id]
     
     if form_id == 'update_received_employer' and form.validate_on_submit():
+        requested_amount = int(form.requested_amount.data.replace(',', ''))
+        received_amount = int(form.received_amount.data.replace(',', ''))
+        insurance_percentage = float(form.insurance_percentage.data)
+        guarantee_performance_percentage = float(form.guarantee_performance_percentage.data)
+        
+        if int(received_amount) != isinstance(requested_amount * (100 - (insurance_percentage + guarantee_performance_percentage)) / 100):
+            flash(message='حاصلضرب مقدار درخواستی در درصد بیمه و حسن انجام کار با مقدار دریافتی برابر نیست!', category='danger')
+            return redirect(location=url_for(endpoint='dashboard.project', project_id=received_employer.re_project_id))
+        
         received_employer.re_project_id = int(form.re_project_id.data)
         received_employer.name = virastarStr(form.name.data)
         received_employer.requested_date = virastarStr(form.requested_date.data)
