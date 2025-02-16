@@ -49,8 +49,12 @@ def project(project_id):
     # wo: WERI Overhead
     # t: Total
     # uni: University
-    # s: Sum
     # proj: Project
+    # fr: Free
+    # rm: Remaining
+    # bl: Blocked
+    # req: Requested
+    # rec: Received
     
        
     results = {
@@ -80,6 +84,16 @@ def project(project_id):
     results['t_proj'] = results['t'] - results['t_ins'] - results['t_uo'] - results['t_wo'] - results['t_tax']
     results['t_proj_perc'] = 100 * results['t_proj'] / results['t']
     
+    re = project.received_employer
+    pe = project.payment_employees
+    
+    results['re_req_sum'] = sum(r.requested_amount for r in re)
+    results['re_req_ins_sum'] = sum(r.requested_amount * r.insurance_percentage / 100 for r in re)
+    results['re_req_gp_sum'] = sum(r.requested_amount * r.guarantee_performance_percentage / 100 for r in re)
+    results['re_rec_sum'] = sum(r.received_amount for r in re)
+    results['re_rec_uo_sum'] = sum(r.received_amount * r.university_overhead_percentage / 100 for r in re)
+    results['re_rec_wo_sum'] = sum(r.received_amount * r.weri_overhead_percentage / 100 for r in re)
+    results['re_rec_tax_sum'] = sum(r.received_amount * r.tax_percentage / 100 for r in re)
     
     return render_template(
         template_name_or_list='dashboard/project.html',
@@ -87,6 +101,9 @@ def project(project_id):
         results=results
     )
     
+    
+
+
 
 @blueprint.route('/project/delete/<int:project_id>', methods=['GET'])
 @login_required
