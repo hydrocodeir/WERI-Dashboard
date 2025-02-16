@@ -196,7 +196,7 @@
                                             class="bx bx-dollar fs-4"></i></span>
                                 </div>
                                 <div class="card-info">
-                                    <h5 class="card-title mb-0 me-2">{{ "{:,}".format(project.contract_price | int) }} ریال
+                                    <h5 class="card-title mb-0 me-2">{{ "{:,}".format(results.t | int) }} ریال
                                     </h5>
                                     <small class="text-muted">مبلغ کل قرارداد</small>
                                 </div>
@@ -217,12 +217,11 @@
                                         <h6 class="mb-2">سهم بیمه</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="danger"
-                                                data-series={{project.contract_insurance_percentage|string}}></div>
+                                                data-series={{results.t_ins_perc | round(1) | string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(contract_employer_insurance | round(0) |
-                                                    int))}} ریال</h6>
+                                                <h6 class="mb-0">{{("{:,}".format(results.t_ins | round(0) | int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-danger">{{project.contract_insurance_percentage|string}}%</span></small>
+                                                        class="badge bg-label-danger">{{results.t_ins_perc | round(1) | string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -236,12 +235,11 @@
                                         <h6 class="mb-2">بالاسری دانشگاه</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="secondary"
-                                                data-series={{contract_university_overhead_percent|string}}></div>
+                                                data-series={{results.t_uo_perc | round(1) | string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(contract_university_overhead | round(0) |
-                                                    int))}} ریال</h6>
+                                                <h6 class="mb-0">{{("{:,}".format(results.t_uo | round(0) | int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-secondary">{{contract_university_overhead_percent|string}}%</span></small>
+                                                        class="badge bg-label-secondary">{{results.t_uo_perc | round(1) | string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -255,12 +253,11 @@
                                         <h6 class="mb-2">بالاسری پژوهشکده</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="secondary"
-                                                data-series={{contract_weri_overhead_percent|string}}></div>
+                                                data-series={{results.t_wo_perc | round(1) | string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(contract_weri_overhead | round(0) |
-                                                    int))}} ریال</h6>
+                                                <h6 class="mb-0">{{("{:,}".format(results.t_wo | round(0) | int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-secondary">{{contract_weri_overhead_percent|string}}%</span></small>
+                                                        class="badge bg-label-secondary">{{results.t_wo_perc | round(1) | string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -272,13 +269,12 @@
                                         <h6 class="mb-2">سهم پروژه (+ مالیات)</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="primary"
-                                                data-series={{contract_project_tax_percent|string}}>
+                                                data-series={{(results.t_proj_perc + results.t_tax_perc) | round(1) | string}}>
                                             </div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(contract_project_tax |
-                                                    round(1) | float))}} ریال</h6>
+                                                <h6 class="mb-0">{{("{:,}".format((results.t_proj + results.t_tax) | round(0) | int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-primary">{{contract_project_tax_percent|string}}%</span></small>
+                                                        class="badge bg-label-primary">{{(results.t_proj_perc + results.t_tax_perc) | round(1) | string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>

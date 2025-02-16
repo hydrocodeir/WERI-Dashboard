@@ -35,9 +35,56 @@ def home():
 @login_required
 def project(project_id):
     project = Project.query.get_or_404(project_id)
+    
+    # c: Contract
+    # empr: Employer
+    # empe: Employees
+    # re: Received Employer
+    # pe: Payment Employees
+    # perc: Percentage
+    # ins: Insurance
+    # gp: Guarantee Performance
+    # tax: Tax
+    # uo: University Overhead
+    # wo: WERI Overhead
+    # t: Total
+    # uni: University
+    # s: Sum
+    # proj: Project
+    
+       
+    results = {
+        "c_empr": project.contract_price,
+        "c_empr_ins_perc": project.contract_insurance_percentage,
+        "c_empr_ins": project.contract_price * project.contract_insurance_percentage / 100,
+        "c_empr_gp_perc": project.contract_guarantee_performance_percentage,
+        "c_empr_gp": project.contract_price * project.contract_guarantee_performance_percentage / 100,        
+        "c_uni": project.contract_price - (project.contract_price * project.contract_insurance_percentage / 100),
+        "c_uni_uo_perc": project.contract_university_overhead_percentage,
+        "c_uni_uo": project.contract_university_overhead_percentage / 100 * (project.contract_price - (project.contract_price * project.contract_insurance_percentage / 100)),
+        "c_uni_wo_perc": project.contract_weri_overhead_percentage,
+        "c_uni_wo": project.contract_weri_overhead_percentage / 100 * (project.contract_price - (project.contract_price * project.contract_insurance_percentage / 100)),
+        "c_uni_tax_perc": project.contract_tax_percentage,
+        "c_uni_tax": project.contract_tax_percentage / 100 * (project.contract_price - (project.contract_price * project.contract_insurance_percentage / 100)),
+    }
+    
+    results['t'] = results['c_empr']
+    results['t_ins'] = results['c_empr_ins']
+    results['t_ins_perc'] = results['c_empr_ins_perc']    
+    results['t_uo'] = results['c_uni_uo']
+    results['t_uo_perc'] = 100 * results['t_uo'] / results['t']
+    results['t_wo'] = results['c_uni_wo']
+    results['t_wo_perc'] = 100 * results['t_wo'] / results['t']
+    results['t_tax'] = results['c_uni_tax']
+    results['t_tax_perc'] = 100 * results['t_tax'] / results['t']
+    results['t_proj'] = results['t'] - results['t_ins'] - results['t_uo'] - results['t_wo'] - results['t_tax']
+    results['t_proj_perc'] = 100 * results['t_proj'] / results['t']
+    
+    
     return render_template(
         template_name_or_list='dashboard/project.html',
-        project=project
+        project=project,
+        results=results
     )
     
 
