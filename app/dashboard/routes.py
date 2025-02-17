@@ -76,13 +76,13 @@ def project(project_id):
     results['t_ins'] = results['c_empr_ins']
     results['t_ins_perc'] = results['c_empr_ins_perc']    
     results['t_uo'] = results['c_uni_uo']
-    results['t_uo_perc'] = 100 * results['t_uo'] / results['t']
+    results['t_uo_perc'] = (100 * results['t_uo'] / results['t']) if results['t'] != 0 else 0
     results['t_wo'] = results['c_uni_wo']
-    results['t_wo_perc'] = 100 * results['t_wo'] / results['t']
+    results['t_wo_perc'] = (100 * results['t_wo'] / results['t']) if results['t'] != 0 else 0
     results['t_tax'] = results['c_uni_tax']
-    results['t_tax_perc'] = 100 * results['t_tax'] / results['t']
+    results['t_tax_perc'] = (100 * results['t_tax'] / results['t']) if results['t'] != 0 else 0
     results['t_proj'] = results['t'] - results['t_ins'] - results['t_uo'] - results['t_wo'] - results['t_tax']
-    results['t_proj_perc'] = 100 * results['t_proj'] / results['t']
+    results['t_proj_perc'] = (100 * results['t_proj'] / results['t']) if results['t'] != 0 else 0
     
     re = project.received_employer
     pe = project.payment_employees
@@ -95,19 +95,19 @@ def project(project_id):
     results['re_rec_wo_sum'] = sum(r.received_amount * r.weri_overhead_percentage / 100 for r in re)
     results['re_rec_tax_sum'] = sum(r.received_amount * r.tax_percentage / 100 for r in re)
     
-    results['re_req_ins_sum_perc'] = 100 * results['re_req_ins_sum'] / results['t']
-    results['re_req_gp_sum_perc'] = 100 * results['re_req_gp_sum'] / results['t']
-    results['re_rec_sum_perc'] = 100 * results['re_rec_sum'] / results['t']
+    results['re_req_ins_sum_perc'] = (100 * results['re_req_ins_sum'] / results['t']) if results['t'] != 0 else 0
+    results['re_req_gp_sum_perc'] = (100 * results['re_req_gp_sum'] / results['t']) if results['t'] != 0 else 0
+    results['re_rec_sum_perc'] = (100 * results['re_rec_sum'] / results['t']) if results['t'] != 0 else 0
     
     results['re_rm_sum'] = results['t'] - results['re_req_ins_sum'] - results['re_req_gp_sum'] - results['re_rec_sum']
-    results['re_rm_sum_perc'] = 100 * results['re_rm_sum'] / results['t']
+    results['re_rm_sum_perc'] = (100 * results['re_rm_sum'] / results['t']) if results['t'] != 0 else 0
     
-    results['re_rec_uo_sum_perc'] = 100 * results['re_rec_uo_sum'] / results['re_rec_sum']
-    results['re_rec_wo_sum_perc'] = 100 * results['re_rec_wo_sum'] / results['re_rec_sum']
-    results['re_rec_tax_sum_perc'] = 100 * results['re_rec_tax_sum'] / results['re_rec_sum']
+    results['re_rec_uo_sum_perc'] = (100 * results['re_rec_uo_sum'] / results['re_rec_sum'])  if results['re_rec_sum'] != 0 else 0
+    results['re_rec_wo_sum_perc'] = (100 * results['re_rec_wo_sum'] / results['re_rec_sum'])  if results['re_rec_sum'] != 0 else 0
+    results['re_rec_tax_sum_perc'] = (100 * results['re_rec_tax_sum'] / results['re_rec_sum'])  if results['re_rec_sum'] != 0 else 0
     
     results['re_rec_proj'] = results['re_rec_sum'] - results['re_rec_uo_sum'] - results['re_rec_wo_sum'] - results['re_rec_tax_sum']
-    results['re_rec_proj_perc'] = 100 * results['re_rec_proj'] / results['re_rec_sum']
+    results['re_rec_proj_perc'] = (100 * results['re_rec_proj'] / results['re_rec_sum']) if results['re_rec_sum'] != 0 else 0
     
     return render_template(
         template_name_or_list='dashboard/project.html',
