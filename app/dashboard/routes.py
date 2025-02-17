@@ -95,6 +95,20 @@ def project(project_id):
     results['re_rec_wo_sum'] = sum(r.received_amount * r.weri_overhead_percentage / 100 for r in re)
     results['re_rec_tax_sum'] = sum(r.received_amount * r.tax_percentage / 100 for r in re)
     
+    results['re_req_ins_sum_perc'] = 100 * results['re_req_ins_sum'] / results['t']
+    results['re_req_gp_sum_perc'] = 100 * results['re_req_gp_sum'] / results['t']
+    results['re_rec_sum_perc'] = 100 * results['re_rec_sum'] / results['t']
+    
+    results['re_rm_sum'] = results['t'] - results['re_req_ins_sum'] - results['re_req_gp_sum'] - results['re_rec_sum']
+    results['re_rm_sum_perc'] = 100 * results['re_rm_sum'] / results['t']
+    
+    results['re_rec_uo_sum_perc'] = 100 * results['re_rec_uo_sum'] / results['re_rec_sum']
+    results['re_rec_wo_sum_perc'] = 100 * results['re_rec_wo_sum'] / results['re_rec_sum']
+    results['re_rec_tax_sum_perc'] = 100 * results['re_rec_tax_sum'] / results['re_rec_sum']
+    
+    results['re_rec_proj'] = results['re_rec_sum'] - results['re_rec_uo_sum'] - results['re_rec_wo_sum'] - results['re_rec_tax_sum']
+    results['re_rec_proj_perc'] = 100 * results['re_rec_proj'] / results['re_rec_sum']
+    
     return render_template(
         template_name_or_list='dashboard/project.html',
         project=project,

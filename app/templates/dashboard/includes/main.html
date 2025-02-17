@@ -310,12 +310,12 @@
                                         <h6 class="mb-2">آزادشده</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="success"
-                                                data-series={{total_contract_free_percent|string}}></div>
+                                                data-series={{results.re_rec_sum_perc|string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_contract_free | round(0) |
+                                                <h6 class="mb-0">{{("{:,}".format(results.re_rec_sum | round(0) |
                                                     int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-success">{{total_contract_free_percent|string}}%</span></small>
+                                                        class="badge bg-label-success">{{results.re_rec_sum_perc|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -328,13 +328,12 @@
                                         <h6 class="mb-2">بازداشت حسن‌انجام‌کار</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="primary"
-                                                data-series={{total_blocked_guarantee_performance_percent|string}}>
+                                                data-series={{results.re_req_gp_sum_perc|string}}>
                                             </div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_blocked_guarantee_performance |
-                                                    round(1) | float))}} ریال</h6>
+                                                <h6 class="mb-0">{{("{:,}".format(results.re_req_gp_sum | round(1) | float))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-primary">{{total_blocked_guarantee_performance_percent|string}}%</span></small>
+                                                        class="badge bg-label-primary">{{results.re_req_gp_sum_perc|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -347,12 +346,12 @@
                                         <h6 class="mb-2">بازداشت بیمه</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="secondary"
-                                                data-series={{total_blocked_insurance_percent|string}}></div>
+                                                data-series={{results.re_req_ins_sum_perc|string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_blocked_insurance | round(0) |
+                                                <h6 class="mb-0">{{("{:,}".format(results.re_req_ins_sum | round(0) |
                                                     int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-secondary">{{total_blocked_insurance_percent|string}}%</span></small>
+                                                        class="badge bg-label-secondary">{{results.re_req_ins_sum_perc|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -366,12 +365,12 @@
                                         <h6 class="mb-2">باقی‌مانده</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="danger"
-                                                data-series={{total_contract_remaining_percent|string}}></div>
+                                                data-series={{results.re_rm_sum_perc|string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_contract_remaining | round(0) |
+                                                <h6 class="mb-0">{{("{:,}".format(results.re_rm_sum | round(0) |
                                                     int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-danger">{{total_contract_remaining_percent|string}}%</span></small>
+                                                        class="badge bg-label-danger">{{results.re_rm_sum_perc|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -402,12 +401,12 @@
                                         <h6 class="mb-2">بالاسری دانشگاه</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="success"
-                                                data-series={{total_university_overhead_percent|string}}></div>
+                                                data-series={{results.re_rec_uo_sum_perc|round(1)|string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_university_overhead | round(0) |
+                                                <h6 class="mb-0">{{("{:,}".format(results.re_rec_uo_sum | round(0) |
                                                     int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-success">{{total_university_overhead_percent|string}}%</span></small>
+                                                        class="badge bg-label-success">{{results.re_rec_uo_sum_perc|round(1)|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -421,12 +420,12 @@
                                         <h6 class="mb-2">بالاسری پژوهشکده</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="success"
-                                                data-series={{total_weri_overhead_percent|string}}></div>
+                                                data-series={{results.re_rec_wo_sum_perc|round(1)|string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_weri_overhead | round(0) |
+                                                <h6 class="mb-0">{{("{:,}".format(results.re_rec_wo_sum | round(0) |
                                                     int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-success">{{total_weri_overhead_percent|string}}%</span></small>
+                                                        class="badge bg-label-success">{{results.re_rec_wo_sum_perc|round(1)|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -440,12 +439,12 @@
                                         <h6 class="mb-2">مالیات</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="danger"
-                                                data-series={{total_tax_percent|string}}></div>
+                                                data-series={{results.re_rec_tax_sum_perc|round(1)|string}}></div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_tax | round(0) |
+                                                <h6 class="mb-0">{{("{:,}".format(results.re_rec_tax_sum | round(0) |
                                                     int))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-danger">{{total_tax_percent|string}}%</span></small>
+                                                        class="badge bg-label-danger">{{results.re_rec_tax_sum_perc|round(1)|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -457,13 +456,12 @@
                                         <h6 class="mb-2">سهم پروژه</h6>
                                         <div class="d-flex align-content-center">
                                             <div class="chart-report" data-color="primary"
-                                                data-series={{total_project_received_percent|string}}>
+                                                data-series={{results.re_rec_proj_perc|round(1)|string}}>
                                             </div>
                                             <div class="chart-info ms-2">
-                                                <h6 class="mb-0">{{("{:,}".format(total_project_received |
-                                                    round(1) | float))}} ریال</h6>
+                                                <h6 class="mb-0">{{("{:,}".format(results.re_rec_proj | round(1) | float))}} ریال</h6>
                                                 <small class="text-muted"><span
-                                                        class="badge bg-label-primary">{{total_project_received_percent|string}}%</span></small>
+                                                        class="badge bg-label-primary">{{results.re_rec_proj_perc|round(1)|string}}%</span></small>
                                             </div>
                                         </div>
                                     </div>
@@ -486,19 +484,19 @@
         <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">پرداختی به پژوهشگران</h5>
+                    <h6 class="card-title mb-0">پرداختی به پژوهشگران</h6>
                 </div>
                 <div class="card-body d-flex align-items-end justify-content-between">
                     <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
                         <div class="d-flex align-content-center">
-                            <div class="chart-report" data-color="success" data-series={{total_payment_employees_percent|string}}></div>
+                            <div class="chart-report" data-color="success" data-series={{total_payment_employees_percent|round(1)|string}}></div>
                             <div class="chart-info ms-2">
                                 <h6 class="mb-0">{{("{:,}".format(total_payment_employees | round(0) | int))}} ریال</h6>
                                 <small class="text-muted">پرداخت‌شده</small>
                             </div>
                         </div>
                         <div class="d-flex align-content-center">
-                            <div class="chart-report" data-color="danger" data-series={{total_payment_employees_remaining_percent|string}}></div>
+                            <div class="chart-report" data-color="danger" data-series={{total_payment_employees_remaining_percent|round(1)|string}}></div>
                             <div class="chart-info ms-2">
                                 <h6 class="mb-0">{{("{:,}".format(total_payment_employees_remaining | round(0) | int))}} ریال</h6>
                                 <small class="text-muted">باقی‌مانده</small>
@@ -513,19 +511,19 @@
         <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">سهم پروژه</h5>
+                    <h6 class="card-title mb-0">سهم پروژه</h6>
                 </div>
                 <div class="card-body d-flex align-items-end justify-content-between">
                     <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
                         <div class="d-flex align-content-center">
-                            <div class="chart-report" data-color="success" data-series={{total_project_received_percent|string}}></div>
+                            <div class="chart-report" data-color="success" data-series={{total_project_received_percent|round(1)|string}}></div>
                             <div class="chart-info ms-2">
                                 <h6 class="mb-0">{{("{:,}".format(total_project_received | round(0) | int))}} ریال</h6>
                                 <small class="text-muted">آزادشده</small>
                             </div>
                         </div>
                         <div class="d-flex align-content-center">
-                            <div class="chart-report" data-color="danger" data-series={{total_project_remaining_percent|string}}></div>
+                            <div class="chart-report" data-color="danger" data-series={{total_project_remaining_percent|round(1)|string}}></div>
                             <div class="chart-info ms-2">
                                 <h6 class="mb-0">{{("{:,}".format(total_project_remaining | round(0) | int))}} ریال</h6>
                                 <small class="text-muted">باقی‌مانده</small>
@@ -542,7 +540,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">بالاسری دانشگاه</h5>
+                    <h6 class="card-title mb-0">بالاسری دانشگاه</h6>
                 </div>
                 <div class="card-body d-flex align-items-end justify-content-between">
                     <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
@@ -574,7 +572,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">بالاسری پژوهشکده</h5>
+                    <h6 class="card-title mb-0">بالاسری پژوهشکده</h6>
                 </div>
                 <div class="card-body d-flex align-items-end justify-content-between">
                     <div class="d-flex align-items-end justify-content-between align-items-center gap-3 w-100">
